@@ -9,12 +9,10 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Role } from './role.entity';
+import { Base } from './base.entity';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+export class User extends Base {
   @Column({ unique: true })
   name: string;
 
@@ -24,11 +22,6 @@ export class User {
   @Column({ default: true })
   enabled: boolean;
 
-  @CreateDateColumn()
-  createdTime: Date;
-
-  @UpdateDateColumn()
-  updatedTime: Date;
   //这里要用多张数据表
   //() => Role:使用函数而不是直接引用类（如Role）的原因是为了确保在编译时，即使类是在不同的文件中定义的，也能正确地解析和引用
   @ManyToMany(() => Role)

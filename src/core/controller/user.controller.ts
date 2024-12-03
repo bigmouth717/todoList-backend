@@ -4,14 +4,15 @@ import { UsersService } from '../service/user.service';
 
 @Controller('users')
 export class UsersController {
-  constructor(userService: UsersService) {}
+  constructor(private userService: UsersService) {}
   @Get()
-  findAll(): string {
-    return 'This action returns all cats';
+  findAll() {
+    return this.userService.findAll();
   }
   @Post()
   createUser(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto.name);
+    console.log(createUserDto.username);
     console.log(process.env.DATABASE_USER);
+    this.userService.create(createUserDto);
   }
 }
